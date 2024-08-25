@@ -16,6 +16,7 @@ class Orm extends Database implements OrmInterface
     public $table;
     private $flags = [];
 
+    
 
     //Use Traits
     use Select;
@@ -27,15 +28,33 @@ class Orm extends Database implements OrmInterface
     }
 
 
-    public function table($table,$callable=null)
+
+    public function validateFilters()
     {
-        $this->table = $table;
-        if(!is_null($callable) && is_callable($callable))
+        if(count($this->allowed) > 0)
         {
-            return $callable($this);
-        }
+            $allowed = array_diff($this->allowed, $this->filtered);
+            return implode(", ", $allowed);
+        } 
         else
         {
+            return "*";
+        }
+        // if (count($this->allowed) > 0) {
+        //     $allowed = array_diff($this->allowed, $this->filtered);
+        //     return implode(", ", $allowed);
+        // } else {
+        //     return "*";
+        // }
+    }
+
+
+    public function table($table, $callable = null)
+    {
+        $this->table = $table;
+        if (!is_null($callable) && is_callable($callable)) {
+            return $callable($this);
+        } else {
             return $this;
         }
     }
@@ -46,20 +65,11 @@ class Orm extends Database implements OrmInterface
         return $this;
     }
 
-    public function insert()
-    {
+    public function insert() {}
 
-    }
+    public function update() {}
 
-    public function update()
-    {
-
-    }
-
-    public function delete()
-    {
-
-    }
+    public function delete() {}
 
 
 
@@ -75,12 +85,9 @@ class Orm extends Database implements OrmInterface
 
     private function displayFlag($name)
     {
-        if(array_key_exists($name,$this->flags))
-        {
+        if (array_key_exists($name, $this->flags)) {
             return true;
-        }
-        else
-        {
+        } else {
             trigger_error("Flag Doesnt Exist");
         }
     }
@@ -93,8 +100,7 @@ class Orm extends Database implements OrmInterface
 
     public function sqlLoader()
     {
-        if($this->displayFlag("select"))
-        {
+        if ($this->displayFlag("select")) {
             // Select Loader
         }
         return $this;
