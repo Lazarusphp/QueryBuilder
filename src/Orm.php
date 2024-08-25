@@ -3,9 +3,10 @@
 namespace Lazarusphp\Orm;
 
 use LazarusPhp\DatabaseManager\Database;
+use LazarusPhp\Orm\Interfaces\OrmInterface;
 use LazarusPhp\Orm\Traits\Select;
 
-class Orm extends Database
+class Orm extends Database implements OrmInterface
 {
 
     // Load Trait Files;
@@ -45,6 +46,21 @@ class Orm extends Database
         return $this;
     }
 
+    public function insert()
+    {
+
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
 
 
 
@@ -79,7 +95,7 @@ class Orm extends Database
     {
         if($this->displayFlag("select"))
         {
-            echo "Sql Loader will run Select Statement";
+            // Select Loader
         }
         return $this;
     }
