@@ -5,8 +5,13 @@ trait Insert
 {
     public function insert()
     {
-        $this->newFlags("insert");
-        $this->sql .= "Insert into " . $this->table ;
-        $this->sql .= "(".implode(",",array_keys($this->params)).")";
+        $this->newFlag("insert")
+        $keys = implode(',',array_keys($this->param));
+        $placeholders = ':' . implode(', :', array_keys($this->param));
+        // $this->newFlags("insert");
+        $this->sql .= "INSERT INTO " . $this->table ;
+        $this->sql .= " ($keys) ";
+        $this->sql .= "VALUES($placeholders)";
+        return $this;
     }
 }
