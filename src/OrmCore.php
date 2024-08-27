@@ -4,6 +4,7 @@ namespace Lazarusphp\Orm;
 
 use LazarusPhp\DatabaseManager\Database;
 use LazarusPhp\Orm\Interfaces\OrmInterface;
+use LazarusPhp\Orm\Traits\Conditions\Where;
 use LazarusPhp\Orm\Traits\Controllers\Insert;
 use LazarusPhp\Orm\Traits\Controllers\Select;
 use LazarusPhp\Orm\Traits\Controllers\Update;
@@ -15,6 +16,8 @@ class OrmCore extends Database implements OrmInterface
     use Insert;
     use Select;
     use Update;
+    // Load condition Traits
+    use Where;
     // Generate the Param Values
     public $param = [];
     public $sql;
@@ -46,8 +49,8 @@ class OrmCore extends Database implements OrmInterface
 
     public function __unset($name)
     {
-        $uid = uniqid("$name_");
-        unset($this->param[$uid]);
+    
+        unset($this->param[$name]);
     }
 
 
@@ -150,40 +153,6 @@ class OrmCore extends Database implements OrmInterface
         return $this->GenerateQuery($this->sql,$this->param);
     }
 
-    // Start Where()
-    public function where($key,$value,$operator=null)
-    {
-        $operator = $operator ?? "=";
-        $params = uniqid("where_");
-         $condition = $key.$operator.":$params";
-          if(count($this->where))
-          {
-              $condition = " AND " . $condition;
-          }
-          $this->where[] = $condition;
-          $this->param[$params] = $value;
-          return $this;
-    }
-    public function FetchWhere()
-    {
-        $wherecond = [];
-        $wheres = $this->where;
-        if(!empty($wheres))
-        {
-        $this->sql .= " WHERE ";
-         foreach($wheres as $where)
-            {
-                $wherecond[] = $where;
-            }
-        $this->sql .= implode(" ",$wherecond);
-        }
-        else
-        {
-          
-        }
-         return $this;
-    }
-    // End WHere
 
     // Get All
     public function get()
