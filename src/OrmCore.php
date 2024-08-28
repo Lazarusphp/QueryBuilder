@@ -8,6 +8,7 @@ use LazarusPhp\Orm\Traits\Conditions\Where;
 use LazarusPhp\Orm\Traits\Controllers\Insert;
 use LazarusPhp\Orm\Traits\Controllers\Select;
 use LazarusPhp\Orm\Traits\Controllers\Update;
+use LazarusPhp\Orm\Traits\Controllers\Delete;
 
 class OrmCore extends Database implements OrmInterface
 {
@@ -16,6 +17,7 @@ class OrmCore extends Database implements OrmInterface
     use Insert;
     use Select;
     use Update;
+    use Delete;
     // Load condition Traits
     use Where;
     // Generate the Param Values
@@ -89,16 +91,6 @@ class OrmCore extends Database implements OrmInterface
             return $this;
         }
     }
-
-    public function bind($key, $value)
-    {
-        $this->param[$key] = $value;
-        return $this;
-    }
-
-    public function delete() {}
-
-
     public function toSql()
     {
         echo $this->sql;
