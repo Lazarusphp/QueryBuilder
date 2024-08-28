@@ -9,6 +9,7 @@ use LazarusPhp\Orm\Traits\Controllers\Insert;
 use LazarusPhp\Orm\Traits\Controllers\Select;
 use LazarusPhp\Orm\Traits\Controllers\Update;
 use LazarusPhp\Orm\Traits\Controllers\Delete;
+use ReflectionClass;
 
 class OrmCore extends Database implements OrmInterface
 {
@@ -59,10 +60,17 @@ class OrmCore extends Database implements OrmInterface
     public function __construct()
     {
         Parent::__construct();
+        echo $this->gettablename();
         // Instantiate a Blank $sql statement
         $this->sql = "";
     }
 
+    public function table()
+    {
+        $class = get_called_class();
+        $reflection  = new ReflectionClass($class);
+        return $this->table = strtolower($reflection->getShortName());
+    }
 
 
     public function validateFilters()
