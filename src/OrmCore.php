@@ -60,7 +60,7 @@ class OrmCore extends Database implements OrmInterface
     public function __construct()
     {
         Parent::__construct();
-        echo $this->gettablename();
+        $this->table();
         // Instantiate a Blank $sql statement
         $this->sql = "";
     }
@@ -89,16 +89,6 @@ class OrmCore extends Database implements OrmInterface
         // }
     }
 
-
-    public function table($table, $callable = null)
-    {
-        $this->table = $table;
-        if (!is_null($callable) && is_callable($callable)) {
-            return $callable($this);
-        } else {
-            return $this;
-        }
-    }
     public function toSql()
     {
         echo $this->sql;
