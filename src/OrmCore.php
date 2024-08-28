@@ -114,7 +114,7 @@ class OrmCore extends Database implements OrmInterface
             trigger_error("Flag $name Already Created");
         }
     }
-
+    
     private function displayFlag($name)
     {
         if (array_key_exists($name, $this->flags)) {
@@ -125,17 +125,11 @@ class OrmCore extends Database implements OrmInterface
         }
     }
 
-    public function generateUid($name)
-    {
-        // generate Param Name;
-        return uniqid($name . "_");
-    }
-
     public function save()
     {
         if ($this->displayFlag("select")) {
             // echo "select is chosen";
-            $this->Fetchwhere();
+            // $this->Fetchwhere();
         } elseif ($this->displayFlag("insert")) {
             echo "insert Chosen";
          
@@ -150,10 +144,9 @@ class OrmCore extends Database implements OrmInterface
 
         // Push Content
         // echo $this->sql;
+        count($this->where) ? $this->fetchWhere() : false;
         return $this->GenerateQuery($this->sql,$this->param);
     }
-
-
     // Get All
     public function get()
     {
@@ -163,7 +156,8 @@ class OrmCore extends Database implements OrmInterface
         }
     }
 
-    // Get 1
+    // Fetch a Single Record by id
+
     public function first()
     {
         if ($this->displayFlag("select")) {

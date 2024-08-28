@@ -17,24 +17,31 @@ trait Where
              $this->param[$params] = $value;
              return $this;
        }
-       public function FetchWhere()
+
+       public function findById($id)
        {
-           $wherecond = [];
-           $wheres = $this->where;
-           if(!empty($wheres))
-           {
-           $this->sql .= " WHERE ";
-            foreach($wheres as $where)
-               {
-                   $wherecond[] = $where;
-               }
-           $this->sql .= implode(" ",$wherecond);
-           }
-           else
-           {
-             
-           }
-            return $this;
+        $params = uniqid("where_");
+        $condition = "id=:$params";
+        $this->where[] = $condition;
+        $this->param[$params] = $id;
+        return $this;
        }
+
+       public function fetchWhere()
+       {
+    
+            $wherecond = [];
+            $wheres = $this->where;
+            if (!empty($wheres)) {
+                $this->sql .= " WHERE ";
+                foreach ($wheres as $where) {
+                    $wherecond[] = $where;
+                }
+                $this->sql .= implode(" ", $wherecond);
+            }
+            return $this;
+        }
+
+          
        // End WHere
 }

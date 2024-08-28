@@ -4,14 +4,17 @@ namespace LazarusPhp\Orm\Traits\Controllers;
 
 trait Select
 {
-    public function select($alias = null)
-    {
-            $this->newFlag("select");
-        
-            $this->sql .= "SELECT ". $this->validateFilters() . " FROM " . $this->table;
-            if (!is_null($alias)) {
-                $this->sql .= " ACS $alias ";
-            }
+    public function select(...$args)
+    {      
+            if(count($args) > 0)
+            (count($args) > 0) ? $args = implode(",",$args) : $args = "*";
+            $this->sql .= "SELECT $args FROM " . $this->table;
             return $this;
+    }
+
+    public function as($alias)
+    {
+        $this->sql .= " AS $alias ";
+        return $this;
     }
 }
