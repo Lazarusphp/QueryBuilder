@@ -13,10 +13,12 @@ namespace App\Http\Models;
 
 class Users extends Model
 {
+
 }
 ```
-As long as the class is connected to the model the file doesnt haave anything inside it.
 
+
+As long as the class is connected to the model the file doesnt haave anything inside it.
 
 ## Generating the table name
 ```
