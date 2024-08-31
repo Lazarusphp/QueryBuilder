@@ -60,16 +60,22 @@ class OrmCore extends Database implements OrmInterface
     public function __construct()
     {
         Parent::__construct();
-        $this->table();
+        $this->GenerateTable();
         // Instantiate a Blank $sql statement
         $this->sql = "";
     }
 
-    public function table()
+    public function GenerateTable()
     {
         $class = get_called_class();
         $reflection  = new ReflectionClass($class);
         return $this->table = strtolower($reflection->getShortName());
+    }
+
+    public function table($table)
+    {
+        $this->table = $table;
+        return $this;
     }
 
 
@@ -133,9 +139,16 @@ class OrmCore extends Database implements OrmInterface
         }
 
         // Push Content
-        // echo $this->sql;
-        count($this->where) ? $this->fetchWhere() : false;
-        return $this->GenerateQuery($this->sql,$this->param);
+        $this->fetchWhere();
+        $save = $this->GenerateQuery($this->sql,$this->param);
+        if($save)
+        {
+            return $save;
+        }
+        else
+        {
+            echo "Failed to Save";
+        }
     }
     // Get All
     public function get()
