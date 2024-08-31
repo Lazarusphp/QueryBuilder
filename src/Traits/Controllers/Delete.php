@@ -6,7 +6,7 @@ trait Delete
     
     public function delete()
     {
-        $this->newFlags("delete");
+        $this->newFlag("delete");
         $this->sql .= "DELETE FROM ". $this->table . " ";
         return $this;
     }
