@@ -13,22 +13,20 @@ trait Select
             return $this;
     }
 
+  
 
-    public function findById($id)
-    {
-      $query = $this->select()->where("id",$id)->save();
-      if($query->rowCount() === 1)
-      {
-        return $query->fetch();
-      }
-      else
-      {
-        return false;
-      }
+  public function findById($id)
+  {
+    $query = $this->select()->where("id", $id)->save();
+    if ($query->rowCount() === 1) {
+      return $query->fetch();
+    } else {
+      return false;
     }
+  }
 
     /**
-     * Find or failed
+     * Find or fail
      *
      * @param [int] $id
      * select value based on the user id;
@@ -36,18 +34,16 @@ trait Select
      * cal
      * @return void
      */
-    public function findOrFail(int $id):bool
-    {
-          $query = $this->select()->where("id",$id)->save();
-          if($query->rowCount() === 1)
-          {
-                return true;
-          } 
-          else
-          {
-            return false;
-          }
+
+  public function findOrFail(int $id): bool
+  {
+    $query = $this->select()->where("id", $id)->save();
+    if ($query->rowCount() === 1) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
     public function as($alias)
     {
