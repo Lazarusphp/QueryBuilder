@@ -3,6 +3,7 @@ namespace LazarusPhp\Orm\Traits\Conditions;
 
 trait Where
 {
+    public $where = [];
        // Start Where()
        public function where($key,$value,$operator=null)
        {
