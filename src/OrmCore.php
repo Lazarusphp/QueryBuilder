@@ -22,11 +22,12 @@ class OrmCore extends Database implements OrmInterface
     // Load condition Traits
     use Where;
     // Generate the Param Values
-    public $param = [];
-    public $sql;
-    public $table;
-    private $flags = [];
-    private $values;
+    private $param = [];
+    private $sql;
+    private $table;
+    private $query;
+
+
 
 
     public $data = [];
@@ -93,42 +94,8 @@ class OrmCore extends Database implements OrmInterface
         echo $this->sql;
     }
 
-
-
-    private function newFlag($name, $value = true)
-    {
-        if (!isset($this->flags[$name])) {
-            $this->flags[$name] = $value;
-        } else {
-            trigger_error("Flag $name Already Created");
-        }
-    }
-    
-    private function displayFlag($name)
-    {
-        if (array_key_exists($name, $this->flags)) {
-            return true;
-        } else {
-            return false;
-            trigger_error("Flag Doesnt Exist");
-        }
-    }
-
     public function save()
     {
-        if ($this->displayFlag("select")) {
-            // echo "select is chosen";
-            // $this->Fetchwhere();
-        } elseif ($this->displayFlag("insert")) {
-            echo "insert Chosen";
-         
-        } elseif ($this->displayFlag("update")) {
-            echo "update";
-            $this->setValues();
-            echo $this->sql;
-        } elseif ($this->displayFlag("delete")) {
-            echo "delete";
-        }
 
         // Push Content
         $this->fetchWhere();
@@ -142,27 +109,28 @@ class OrmCore extends Database implements OrmInterface
             echo "Failed to Save";
         }
     }
-    public function hasQuery()
-    {
-        return $this->GenerateQuery($this->sql, $this->param=null);
-    }
-
-    // Get All
-    public function get()
-    {
-       $this->FetchWhere();
-        return $this->hasQuery()->fetchAll();
-    }
-
-    // Fetch a Single Record by id
-
-    public function first()
-    {
-        if ($this->displayFlag("select")) {
-            $this->FetchWhere();
-            $query = $this->GenerateQuery($this->sql, $this->param);
-            return $query->fetch();
+    
+        public function get()
+        {
+            $query = $this->save();
+            $this->query = $query->fetchAll();
+            return $this->query;
         }
-    }
+
+
+        public function first()
+        {
+            $query = $this->save();
+            $this->query = $query->fetch();
+            return $this->query;
+        }
+
+        public function asJson()
+        {
+            header("content-type:application/json");
+             return json_encode($this->query);
+        }
+
+
 
 }
