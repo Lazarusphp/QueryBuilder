@@ -19,10 +19,24 @@ trait Where
              return $this;
        }
 
+    //    Allow Sql to Pass OR to the Where Statement
+       public function orWhere($key,$value,$operator=null)
+       {
+           $operator = $operator ?? "=";
+           $params = uniqid("orWhere_");
+            $condition = $key.$operator.":$params";
+             if(count($this->where))
+             {
+                 $condition = " OR " . $condition;
+             }
+             $this->where[] = $condition;
+             $this->param[$params] = $value;
+             return $this;
+       }
+
 
        public function fetchWhere()
        {
-    
             $wherecond = [];
             $wheres = $this->where;
             if (!empty($wheres)) {
