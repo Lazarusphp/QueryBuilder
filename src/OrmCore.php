@@ -112,22 +112,33 @@ class OrmCore extends Database implements OrmInterface
         public function get()
         {
             $query = $this->save();
-            $this->query = $query->fetchAll();
-            return $this->query;
+            return $query->fetchAll();
         }
 
 
         public function first()
         {
             $query = $this->save();
-            $this->query = $query->fetch();
-            return $this->query;
+            return $query->fetch();
         }
 
         public function asJson()
         {
+            $query = $this->save();
+            $count = $query->rowCount();
+            if($count == 1)
+            {
+               $json = $query->fetch();
+            }
+            if($count > 1)
+            {
+               $json = $query->fetchAll();
+            }
+
             header("content-type:application/json");
-             return json_encode($this->query);
+            return json_encode($json);
+
+
         }
 
 
