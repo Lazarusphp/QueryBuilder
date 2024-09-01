@@ -60,12 +60,12 @@ class OrmCore extends Database implements OrmInterface
     public function __construct()
     {
         Parent::__construct();
-        $this->GenerateTable();
+        $this->generateTable();
         // Instantiate a Blank $sql statement
         $this->sql = "";
     }
 
-    public function GenerateTable()
+    public function generateTable()
     {
         $class = get_called_class();
         $reflection  = new ReflectionClass($class);
@@ -77,7 +77,6 @@ class OrmCore extends Database implements OrmInterface
         $this->table = $table;
         return $this;
     }
-
 
     public function validateFilters()
     {
