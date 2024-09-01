@@ -27,7 +27,6 @@ class OrmCore extends Database implements OrmInterface
     public $table;
     private $flags = [];
     private $values;
-    public $where = [];
 
 
     public $data = [];
@@ -87,12 +86,6 @@ class OrmCore extends Database implements OrmInterface
         } else {
             return "*";
         }
-        // if (count($this->allowed) > 0) {
-        //     $allowed = array_diff($this->allowed, $this->filtered);
-        //     return implode(", ", $allowed);
-        // } else {
-        //     return "*";
-        // }
     }
 
     public function toSql()
@@ -132,7 +125,6 @@ class OrmCore extends Database implements OrmInterface
         } elseif ($this->displayFlag("update")) {
             echo "update";
             $this->setValues();
-            $this->Fetchwhere();
             echo $this->sql;
         } elseif ($this->displayFlag("delete")) {
             echo "delete";
@@ -150,13 +142,16 @@ class OrmCore extends Database implements OrmInterface
             echo "Failed to Save";
         }
     }
+    public function hasQuery()
+    {
+        return $this->GenerateQuery($this->sql, $this->param=null);
+    }
+
     // Get All
     public function get()
     {
-        if ($this->displayFlag("select")) {
-            $this->FetchWhere();
-            return $this->GenerateQuery($this->sql, $this->param)->fetchAll();
-        }
+       $this->FetchWhere();
+        return $this->hasQuery()->fetchAll();
     }
 
     // Fetch a Single Record by id
@@ -170,9 +165,4 @@ class OrmCore extends Database implements OrmInterface
         }
     }
 
-    public function toJson($print = false)
-    {
-        ($print == true) ? header('Content-Type: application/json; charset=utf-8') : false;
-        return json_encode($this->param);
-    }
 }
