@@ -15,12 +15,6 @@ trait Update
         $this->sql .= implode(",",$this->keyvalues);
         return $this;
     }
-
-    public function setValues()
-    {
-
-        return $this->sql;
-    }
  
 
 
