@@ -18,14 +18,6 @@ trait Where
              return $this;
        }
 
-       public function findById($id)
-       {
-        $params = uniqid("where_");
-        $condition = "id=:$params";
-        $this->where[] = $condition;
-        $this->param[$params] = $id;
-        return $this;
-       }
 
        public function fetchWhere()
        {
