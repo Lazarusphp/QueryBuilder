@@ -47,7 +47,7 @@ trait Select
 
     public function as($alias)
     {
-        $this->sql .= " AS $alias ";
+        $this->sql .= " $alias ";
         return $this;
     }
 
