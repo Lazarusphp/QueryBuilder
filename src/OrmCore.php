@@ -4,6 +4,7 @@ namespace Lazarusphp\Orm;
 
 use LazarusPhp\DatabaseManager\Database;
 use LazarusPhp\Orm\Interfaces\OrmInterface;
+use LazarusPhp\Orm\Traits\Conditions\Joins;
 use LazarusPhp\Orm\Traits\Conditions\Where;
 use LazarusPhp\Orm\Traits\Controllers\Insert;
 use LazarusPhp\Orm\Traits\Controllers\Select;
@@ -21,6 +22,7 @@ class OrmCore extends Database implements OrmInterface
     use Delete;
     // Load condition Traits
     use Where;
+    use Joins;
     // Generate the Param Values
     private $param = [];
     private $sql;
@@ -97,7 +99,9 @@ class OrmCore extends Database implements OrmInterface
     {
 
         // Push Content
+        $this->fetchJoins();
         $this->fetchWhere();
+//        echo $this->toSql();
         $save = $this->GenerateQuery($this->sql,$this->param);
         if($save)
         {
