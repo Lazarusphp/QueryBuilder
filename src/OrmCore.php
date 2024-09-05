@@ -4,7 +4,10 @@ namespace Lazarusphp\Orm;
 
 use LazarusPhp\DatabaseManager\Database;
 use LazarusPhp\Orm\Interfaces\OrmInterface;
+use LazarusPhp\Orm\Traits\Conditions\Grouping;
 use LazarusPhp\Orm\Traits\Conditions\Joins;
+use LazarusPhp\Orm\Traits\Conditions\Limit;
+use LazarusPhp\Orm\Traits\Conditions\Order;
 use LazarusPhp\Orm\Traits\Conditions\Where;
 use LazarusPhp\Orm\Traits\Controllers\Insert;
 use LazarusPhp\Orm\Traits\Controllers\Select;
@@ -23,11 +26,16 @@ class OrmCore extends Database implements OrmInterface
     // Load condition Traits
     use Where;
     use Joins;
+    use Limit;
+    use Order;
+    use Grouping;
     // Generate the Param Values
     private $param = [];
     private $sql;
     private $table;
     private $query;
+
+    private  $dev;
 
 
 
@@ -95,13 +103,25 @@ class OrmCore extends Database implements OrmInterface
         echo $this->sql;
     }
 
+    public  function devtest()
+    {
+        $this->dev = true;
+        return $this;
+    }
+
     public function save()
     {
 
         // Push Content
         $this->fetchJoins();
         $this->fetchWhere();
-//        echo $this->toSql();
+        $this->fetchOrderBy();
+        $this->fetchGroupBy();
+        $this->fetchLimit();
+        if($this->dev == true)
+        {
+            echo $this->sql;
+        }
         $save = $this->GenerateQuery($this->sql,$this->param);
         if($save)
         {
