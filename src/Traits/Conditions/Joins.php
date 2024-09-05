@@ -5,9 +5,13 @@ namespace LazarusPhp\Orm\Traits\Conditions;
 trait Joins
 {
     protected  $joins  = [];
-    public  function innerJoin($table,$alias)
+    public  function innerJoin($table,$alias=null)
     {
-        $this->joins[] = " INNER JOIN $table $alias ";
+        $this->joins[] = " INNER JOIN $table ";
+        if(!is_null($alias))
+        {
+         $this->joins[] = " $alias ";
+        }
         return $this;
     }
 
