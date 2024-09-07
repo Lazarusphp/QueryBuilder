@@ -19,6 +19,35 @@ trait Where
              return $this;
        }
 
+       public function in($key,...$values)
+       {
+
+           $results = [];
+           foreach($values as $value)
+           {
+               $param = uniqid("in_");
+               $results[] = ":$param";
+               $this->param[$param] = $value;
+           }
+           $this->where[] = "$key IN (" . implode(", ",$results).")";
+           return $this;
+       }
+
+//       Reverse to In
+//Display ALl results that will show results other than those called
+    public function notIn($key,...$values)
+    {
+
+        $results = [];
+        foreach($values as $value)
+        {
+            $param = uniqid("notIn_");
+            $results[] = ":$param";
+            $this->param[$param] = $value;
+        }
+        $this->where[] = "$key NOT IN (" . implode(", ",$results).")";
+        return $this;
+    }
     //    Allow Sql to Pass OR to the Where Statement
        public function orWhere($key,$value,$operator=null)
        {
