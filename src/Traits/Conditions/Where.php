@@ -128,7 +128,7 @@ trait Where
              return $this;
        }
 
-       public  function  between($key,$value,$value2)
+       public  function  between(string $key, int $value,int $value2)
        {
            $param = uniqid("between_");
            $param2 = uniqid("between_");
@@ -139,12 +139,13 @@ trait Where
                $condition = " AND " . $condition;
            }
 
-           $where[] = $condition;
+           $this->where[] = $condition;
            $this->param[$param] = $value;
            $this->param[$param2] = $value2;
+           return $this;
        }
 
-       public  function  orbetween($key,$value,$value2)
+       public  function  orbetween(string $key, int $value,int $value2)
        {
            $param = uniqid("orBetween_");
            $param2 = uniqid("orBetween_");
@@ -155,7 +156,7 @@ trait Where
                $condition = " OR " . $condition;
            }
 
-           $where[] = $condition;
+           $this->where[] = $condition;
            $this->param[$param] = $value;
            $this->param[$param2] = $value2;
            return $this;
