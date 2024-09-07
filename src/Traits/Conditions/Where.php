@@ -128,6 +128,39 @@ trait Where
              return $this;
        }
 
+       public  function  between($key,$value,$value2)
+       {
+           $param = uniqid("between_");
+           $param2 = uniqid("between_");
+           $condition = "$key BETWEEN :$param AND :$param2";
+
+           if(count($this->where))
+           {
+               $condition = " AND " . $condition;
+           }
+
+           $where[] = $condition;
+           $this->param[$param] = $value;
+           $this->param[$param2] = $value2;
+       }
+
+       public  function  orbetween($key,$value,$value2)
+       {
+           $param = uniqid("orBetween_");
+           $param2 = uniqid("orBetween_");
+           $condition = "$key BETWEEN :$param AND :$param2";
+
+           if(count($this->where))
+           {
+               $condition = " OR " . $condition;
+           }
+
+           $where[] = $condition;
+           $this->param[$param] = $value;
+           $this->param[$param2] = $value2;
+           return $this;
+       }
+
 
        public function fetchWhere()
        {
