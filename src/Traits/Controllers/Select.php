@@ -4,14 +4,15 @@ namespace LazarusPhp\Orm\Traits\Controllers;
 
 trait Select
 {
-    protected $args;
+    gi src/Traits/Controllers/Select.php
+
     public function select(...$args)
-    {      
-  
-            (count($args) > 0) ? $this->args = implode(",",$args) : $this->args = "*";
-            $this->sql .= "SELECT $this->args FROM " . $this->table;
+    {
+            (count($args) > 0) ? $args = implode(",",$args) : $args = "*";
+            $this->sql .= "SELECT $args FROM " . $this->table;
             return $this;
     }
+
 
   
 
@@ -23,6 +24,13 @@ trait Select
     } else {
       return false;
     }
+  }
+
+  public function union($table)
+  {
+      $this->table = $table;
+      $this->sql .= " UNION ";
+      return $this;
   }
 
     /**

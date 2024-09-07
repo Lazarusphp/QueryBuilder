@@ -22,6 +22,13 @@ trait Joins
 
     }
 
+    public  function crossJoin($table,$alias)
+    {
+        $this->joins[] = " CROSS JOIN $table $alias ";
+        return $this;
+
+    }
+
     public  function leftJoin($table,$alias)
     {
         $this->joins[] = " RIGHT JOIN  $table $alias ";
