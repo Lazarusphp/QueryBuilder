@@ -33,6 +33,22 @@ trait Where
            return $this;
        }
 
+       public  function like($key,$value)
+       {
+        $param = uniqid("like_");
+
+        $condition = "$key LIKE :$param";
+        if(count($this->where))
+        {
+            $condition = "OR $condition";
+        }
+
+           $this->where[] = $condition;
+           $this->param[$param] = $value;
+        return $this;
+       }
+
+
 //       Reverse to In
 //Display ALl results that will show results other than those called
     public function notIn($key,...$values)
