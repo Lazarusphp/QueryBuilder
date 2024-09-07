@@ -115,8 +115,8 @@ class OrmCore extends Database implements OrmInterface
         // Push Content
         $this->fetchJoins();
         $this->fetchWhere();
-        $this->fetchOrderBy();
         $this->fetchGroupBy();
+        $this->fetchOrderBy();
         $this->fetchLimit();
         if($this->dev == true)
         {
