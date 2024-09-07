@@ -7,12 +7,16 @@ trait Order
 
     private $order;
 
-    public function orderBy($value,$direction="ASC")
+    public function orderBy($direction, ...$values)
     {
-        $orderParam = uniqid("order_");
-        $directionparam = uniqid("direction_");
         $direction = strtoupper($direction);
-        $this->order = " ORDER BY $value $direction ";
+        if(!in_array($direction, ['ASC', 'DESC']))
+        {
+            trigger_error("Invalid Direction");
+        }
+
+        $args = implode(", ",$values);
+        $this->order = " ORDER BY  $args $direction ";
         return $this;
     }
 
