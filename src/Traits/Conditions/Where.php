@@ -33,9 +33,25 @@ trait Where
            return $this;
        }
 
-       public  function like($key,$value)
+
+        public function like($key,$value)
+        {
+            $param = uniqid("like_");
+
+            $condition = "$key LIKE :$param";
+            if(count($this->where))
+            {
+                $condition = "AND $condition";
+            }
+
+            $this->where[] = $condition;
+            $this->param[$param] = $value;
+            return $this;
+        }
+
+       public  function orLike($key,$value)
        {
-        $param = uniqid("like_");
+        $param = uniqid("orLike_");
 
         $condition = "$key LIKE :$param";
         if(count($this->where))
@@ -47,6 +63,39 @@ trait Where
            $this->param[$param] = $value;
         return $this;
        }
+
+
+       public  function notLike($key,$value)
+       {
+        $param = uniqid("notLike_");
+
+        $condition = "$key NOT LIKE :$param";
+        if(count($this->where))
+        {
+            $condition = "AND $condition";
+        }
+
+           $this->where[] = $condition;
+           $this->param[$param] = $value;
+        return $this;
+       }
+
+    public  function orNotLike($key,$value)
+    {
+        $param = uniqid("orNotLike_");
+
+        $condition = "$key NOT LIKE :$param";
+        if(count($this->where))
+        {
+            $condition = "OR $condition";
+        }
+
+        $this->where[] = $condition;
+        $this->param[$param] = $value;
+        return $this;
+    }
+
+
 
 
 //       Reverse to In
