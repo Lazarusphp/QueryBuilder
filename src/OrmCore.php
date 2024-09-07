@@ -5,6 +5,7 @@ namespace Lazarusphp\Orm;
 use LazarusPhp\DatabaseManager\Database;
 use LazarusPhp\Orm\Interfaces\OrmInterface;
 use LazarusPhp\Orm\Traits\Conditions\Grouping;
+use LazarusPhp\Orm\Traits\Conditions\Having;
 use LazarusPhp\Orm\Traits\Conditions\Joins;
 use LazarusPhp\Orm\Traits\Conditions\Limit;
 use LazarusPhp\Orm\Traits\Conditions\Order;
@@ -29,6 +30,7 @@ class OrmCore extends Database implements OrmInterface
     use Limit;
     use Order;
     use Grouping;
+    use Having;
     // Generate the Param Values
     private $param = [];
     private $sql;
@@ -116,27 +118,27 @@ class OrmCore extends Database implements OrmInterface
         $this->fetchJoins();
         $this->fetchWhere();
         $this->fetchGroupBy();
+        $this->fetchHaving();
         $this->fetchOrderBy();
         $this->fetchLimit();
         if($this->dev == true)
         {
             echo $this->sql;
         }
-        $save = $this->GenerateQuery($this->sql,$this->param);
-        if($save)
-        {
-            return $save;
-        }
-        else
-        {
-            echo "Failed to Save";
-        }
+         return $this->GenerateQuery($this->sql,$this->param);
+
     }
     
         public function get()
         {
             $query = $this->save();
             return $query->fetchAll();
+        }
+
+        public  function countRows()
+        {
+            $query =$this->save();
+            $query->rowCount();
         }
 
 
