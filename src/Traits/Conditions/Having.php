@@ -5,7 +5,7 @@ namespace LazarusPhp\Orm\Traits\Conditions;
 trait Having
 {
     protected $having = [];
-    public function Having($key, $value, $operator = null)
+    public function having($key, $value, $operator = null)
     {
         $param = uniqid("having_");
         $operator=$operator ?? "=";
