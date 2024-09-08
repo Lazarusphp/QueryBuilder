@@ -20,7 +20,6 @@ if one or more where conditions are required it can be done by adding a second w
         $users->select()->where("id","1")->where("username","mrbean")->first();
     }
 ```
-this would output
 ```sql
     SELECT * FROM users WHERE id='1' AND username = "mrbean";
 ```
@@ -35,10 +34,11 @@ Like where the option for or is also made available by using the orWhere() metho
         $users->select()->where("id","1")->orWhere("username","mrbean")->first();
     }
 ```
-this would output
 ```sql
     SELECT * FROM users WHERE id='1' OR username = "mrbean";
 ```
+
+along with  where and orWhere notWhere orNotWhere are also available and work the same way as shown above.
 
 ### using joins
 using Joins allows a table to merge with one or more tables combining the records into one this can be done using either 
