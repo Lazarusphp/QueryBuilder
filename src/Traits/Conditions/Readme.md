@@ -116,3 +116,16 @@ the can be done with the following code.
 ```sql
 SELECT * FROM users u WHERE id>:where_66dded1fc62d5 GROUP BY username ORDER BY id ASC
 ```
+
+###### Union
+if merging two tables with the exact same value is needed then this can be made possible using the union() method
+
+```php
+  public function index()
+    {
+        $users = Users();
+        $users->select()->union("user_backups")
+        ->select()->orderBy("id")->get();
+    }
+```
+ Please note that union() requires a table to pass it to next select statement, leaving it blank will trigger an error
