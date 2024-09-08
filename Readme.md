@@ -56,7 +56,7 @@ class Users extends Model
 
 User.php once created is extended to Model, the Model class which eventually extends to the database via the QueryBuilder Core class
 
-The Purpose of the Users.php is mainly to allow the user to Create and apply custom Query Builder Functions [More on Custom Code](#home)
+The Purpose of the Users.php is mainly to allow the user to Create and apply custom Query Builder Functions [More on Custom Code](https://github.com/Lazarusphp/orm/blob/main/Custom.md)
 
 ###### Making the Connection
 Once a Model Class has been created the connection simply needs to be instantiated
@@ -110,6 +110,19 @@ it is possible to select specific column from the table by adding values into th
 ```
 Leaving the select method empty will just call the wildcard (*) and select all values.
 
+##### Using an alias
+this would normally be used with joins but the query Builder also supports a table alias this is done using the as() method
+
+```php
+
+ public function insert()
+    {
+        $users = Users();
+        $users->select("u.username")->as("u")->where("u.username","mrbean")->save();
+    }
+```
+
+
 ###### Inserting values
 in order to insert data into the database the user is required to specify the values, this is done using our key pair magic method
 ```php
@@ -122,6 +135,7 @@ in order to insert data into the database the user is required to specify the va
     }
 ```
 > Retrieving the last id has currently not been implemented
+
 
 ###### Updating Data
 
