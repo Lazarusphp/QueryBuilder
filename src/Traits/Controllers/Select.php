@@ -4,7 +4,6 @@ namespace LazarusPhp\Orm\Traits\Controllers;
 
 trait Select
 {
-    gi src/Traits/Controllers/Select.php
 
     public function select(...$args)
     {
