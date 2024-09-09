@@ -1,6 +1,6 @@
 {
-    "name": "lazarusphp/orm",
-    "description": "Orm Package for Lazarusphp Framework",
+    "name": "lazarusphp/querbuilder",
+    "description": "QueryBuilder Package for Lazarusphp Framework",
     "type": "library",
     "require": {
         "lazarusphp/databasemanager": "^1.0.0"
@@ -8,7 +8,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "LazarusPhp\\Orm\\": "src/"
+            "LazarusPhp\\QueryBuilder\\": "src/"
         }
     },
     "authors": [

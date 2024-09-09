@@ -1,5 +1,5 @@
 <?php
-namespace LazarusPhp\Orm\Traits\Controllers;
+namespace LazarusPhp\QueryBuilder\Traits\Controllers;
 
 trait Delete
 {

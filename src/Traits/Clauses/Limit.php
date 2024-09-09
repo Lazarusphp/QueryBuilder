@@ -1,6 +1,6 @@
 <?php
 
-namespace LazarusPhp\Orm\Traits\Clauses;
+namespace LazarusPhp\QueryBuilder\Traits\Clauses;
 
 trait Limit
 {

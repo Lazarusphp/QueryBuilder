@@ -1,18 +1,18 @@
 <?php
 
-namespace Lazarusphp\Orm;
+namespace Lazarusphp\QueryBuilder;
 
 use LazarusPhp\DatabaseManager\Database;
-use LazarusPhp\Orm\Traits\Clauses\Grouping;
-use LazarusPhp\Orm\Traits\Clauses\Having;
-use LazarusPhp\Orm\Traits\Clauses\Joins;
-use LazarusPhp\Orm\Traits\Clauses\Limit;
-use LazarusPhp\Orm\Traits\Clauses\Order;
-use LazarusPhp\Orm\Traits\Clauses\Where;
-use LazarusPhp\Orm\Traits\Controllers\Insert;
-use LazarusPhp\Orm\Traits\Controllers\Select;
-use LazarusPhp\Orm\Traits\Controllers\Update;
-use LazarusPhp\Orm\Traits\Controllers\Delete;
+use LazarusPhp\QueryBuilder\Traits\Clauses\Grouping;
+use LazarusPhp\QueryBuilder\Traits\Clauses\Having;
+use LazarusPhp\QueryBuilder\Traits\Clauses\Joins;
+use LazarusPhp\QueryBuilder\Traits\Clauses\Limit;
+use LazarusPhp\QueryBuilder\Traits\Clauses\Order;
+use LazarusPhp\QueryBuilder\Traits\Clauses\Where;
+use LazarusPhp\QueryBuilder\Traits\Controllers\Insert;
+use LazarusPhp\QueryBuilder\Traits\Controllers\Select;
+use LazarusPhp\QueryBuilder\Traits\Controllers\Update;
+use LazarusPhp\QueryBuilder\Traits\Controllers\Delete;
 use ReflectionClass;
 
 class Core extends Database
