@@ -3,22 +3,20 @@
 namespace Lazarusphp\Orm;
 
 use LazarusPhp\DatabaseManager\Database;
-use LazarusPhp\Orm\Interfaces\OrmInterface;
-use LazarusPhp\Orm\Traits\Conditions\Grouping;
-use LazarusPhp\Orm\Traits\Conditions\Having;
-use LazarusPhp\Orm\Traits\Conditions\Joins;
-use LazarusPhp\Orm\Traits\Conditions\Limit;
-use LazarusPhp\Orm\Traits\Conditions\Order;
-use LazarusPhp\Orm\Traits\Conditions\Where;
+use LazarusPhp\Orm\Traits\Clauses\Grouping;
+use LazarusPhp\Orm\Traits\Clauses\Having;
+use LazarusPhp\Orm\Traits\Clauses\Joins;
+use LazarusPhp\Orm\Traits\Clauses\Limit;
+use LazarusPhp\Orm\Traits\Clauses\Order;
+use LazarusPhp\Orm\Traits\Clauses\Where;
 use LazarusPhp\Orm\Traits\Controllers\Insert;
 use LazarusPhp\Orm\Traits\Controllers\Select;
 use LazarusPhp\Orm\Traits\Controllers\Update;
 use LazarusPhp\Orm\Traits\Controllers\Delete;
 use ReflectionClass;
 
-class OrmCore extends Database implements OrmInterface
+class Core extends Database
 {
-
     // Load Trait Files;
     use Insert;
     use Select;

@@ -1,6 +1,6 @@
 <?php
 
-namespace LazarusPhp\Orm\Traits\Conditions;
+namespace LazarusPhp\Orm\Traits\Clauses;
 
 trait Limit
 {
@@ -15,7 +15,7 @@ trait Limit
         $this->param[$parammin] = $start;
         if(!is_null($end))
             {
-                $this->limit[] .= ", :$paramend";
+                $this->limit[] = ", :$paramend";
                 $this->param[$paramend] = $end;
             }
 

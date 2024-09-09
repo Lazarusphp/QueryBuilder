@@ -1,6 +1,6 @@
 <?php
 
-namespace LazarusPhp\Orm\Traits\Conditions;
+namespace LazarusPhp\Orm\Traits\Clauses;
 
 trait Having
 {
