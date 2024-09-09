@@ -1,5 +1,5 @@
 {
-    "name": "lazarusphp/querbuilder",
+    "name": "lazarusphp/querybuilder",
     "description": "QueryBuilder Package for Lazarusphp Framework",
     "type": "library",
     "require": {
