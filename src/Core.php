@@ -39,7 +39,6 @@ class Core extends Database
 
 
 
-
     public $data = [];
 
     public function __set($name, $value)
