@@ -68,7 +68,7 @@ class HomeController
 {
     public function index()
     {
-        $users = Users();
+        $users = new Users();
     }
 }
 
@@ -81,7 +81,7 @@ Users.php will connect to a table name called users, this means if you create a 
 ```php
   public function index()
     {
-        $users = Users();
+        $users = new Users();
         $users->select()->get();
     }
 ```
@@ -89,7 +89,7 @@ Users.php will connect to a table name called users, this means if you create a 
 ```php
   public function index()
     {
-        $users = Users();
+        $users = new Users();
         $users->select()->first();
     }
 ```
@@ -104,7 +104,7 @@ it is possible to select specific column from the table by adding values into th
 ```php
   public function index()
     {
-        $users = Users();
+        $users = new Users();
         $users->select("username","email","password","firstname","lastname")->get();
     }
 ```
@@ -115,9 +115,9 @@ this would normally be used with joins but the query Builder also supports a tab
 
 ```php
 
- public function insert()
+ public function index()
     {
-        $users = Users();
+        $users = new Users();
         $users->select("u.username")->as("u")->where("u.username","mrbean")->save();
     }
 ```
@@ -131,11 +131,27 @@ in order to insert data into the database the user is required to specify the va
         $users = Users();
         $users->username = "mrbean";
         $users->password = password_hash("test",PASSWORD_DEFAULT);
-        $users->insert()->save();
+        // using save is no longer needed
+        $users->insert();
+        // optionally data can be passed as an array value
+        $users->insert(["username"=>"mrbean"]);
     }
 ```
-> Retrieving the last id has currently not been implemented
 
+**a new Replace method has been added and works in the same manner as insert**
+
+
+###### Retrieving last inserted id
+```php
+public function insert()
+{
+    $users = new Users();
+    $users->username = "mrbean";
+    $users->insert();
+    // this will only be visable with insert.
+    echo $users->lastId;
+}
+```
 
 ###### Updating Data
 
@@ -143,25 +159,36 @@ Like Insert the update uses the key pair Magic method to pass data to the databa
 ```php
  public function update()
     {
-        $users = Users();
+        $users = new Users();
         $users->username = "mrbean";
         $users->password = password_hash("Apple12345",PASSWORD_DEFAULT);
-        $users->insert()->where("id",1)->save();
+        $users->update()->where("id",1)->save();
     }
 ```
 
 ###### Deleting records
 in order to delete a record the delete() method is required.
 ```php
- public function update()
+ public function delete()
     {
-        $users = Users();
+        $users = new Users();
         $users->delete()->where("id",1)->save();
     }
 ```
 
 > Please be aware you are required to add a where when using update and delete other wise you will affect all rows
 For more information on Conditions [Click here](https://github.com/Lazarusphp/orm/tree/main/src/Traits/Conditions)
+
+> the query builder has been implemented with a factory method option called DbQuery and can be used as a replacement to keep creating new instances.
+
+> using DBQuery also allows for more freedom when creating tables.
+
+```php
+
+// Adding a table is currently required.
+return DbQuery::table("users")->select()->as("u")->where("u.username","mrbean")->get();
+
+```
 
 
 
