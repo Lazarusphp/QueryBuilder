@@ -3,6 +3,7 @@
 namespace Lazarusphp\QueryBuilder;
 
 use LazarusPhp\DatabaseManager\Database;
+use LazarusPhp\DatabaseManager\QueryBuilder;
 use LazarusPhp\QueryBuilder\Traits\Clauses\Grouping;
 use LazarusPhp\QueryBuilder\Traits\Clauses\Having;
 use LazarusPhp\QueryBuilder\Traits\Clauses\Joins;
@@ -15,8 +16,11 @@ use LazarusPhp\QueryBuilder\Traits\Controllers\Update;
 use LazarusPhp\QueryBuilder\Traits\Controllers\Delete;
 use ReflectionClass;
 
-class Core extends Database
+class Core
 {
+
+    public $lastId;
+
     // Load Trait Files;
     use Insert;
     use Select;
@@ -30,12 +34,12 @@ class Core extends Database
     use Grouping;
     use Having;
     // Generate the Param Values
-    private $param = [];
-    private $sql;
-    private $table;
-    private $query;
+    protected $param = [];
+    protected $sql;
+    protected $table;
+    protected $query;
 
-    private  $dev;
+    protected  $dev;
 
 
 
@@ -46,6 +50,12 @@ class Core extends Database
         $this->param[$name] = $value;
     }
 
+    public function sql($sql,$params)
+    {
+        $this->sql = $sql;
+        $this->param = $params;
+        return $this->save($this->sql,$this->param);
+    }
 
     public function __get($name)
     {
@@ -66,15 +76,14 @@ class Core extends Database
     }
 
 
-    public function __construct()
+    public function __construct(string $table = "")
     {
-        Parent::__construct();
-        $this->generateTable();
+        empty($table) ? $this->generateTable() : $this->table = $table;
         // Instantiate a Blank $sql statement
         $this->sql = "";
     }
 
-    public function generateTable()
+    protected function generateTable()
     {
         $class = get_called_class();
         $reflection  = new ReflectionClass($class);
@@ -122,27 +131,33 @@ class Core extends Database
         {
             echo $this->sql;
         }
-         return $this->GenerateQuery($this->sql,$this->param);
+      
+    $query = new QueryBuilder();
+    $result = $query->save($this->sql, $this->param);
+
+    // Get the last inserted ID if file is inserted
+    $this->lastId = $query->lastId;
+
+    return $result;
 
     }
     
-        public function get()
+        public function get($fetch = \PDO::FETCH_OBJ)
         {
             $query = $this->save();
-            return $query->fetchAll();
+            return $query->fetchAll($fetch);
         }
 
         public  function countRows()
         {
-            $query =$this->save();
-            $query->rowCount();
+            return $this->save()->rowCount();
         }
 
 
-        public function first()
+        public function first($fetch = \PDO::FETCH_OBJ)
         {
-            $query = $this->save();
-            return $query->fetch();
+            
+            return $this->save()->fetch($fetch);
         }
 
         public function asJson()
