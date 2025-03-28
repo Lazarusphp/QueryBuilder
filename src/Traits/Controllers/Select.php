@@ -4,11 +4,11 @@ namespace LazarusPhp\QueryBuilder\Traits\Controllers;
 
 trait Select
 {
-
     public function select(...$args)
     {
             (count($args) > 0) ? $args = implode(",",$args) : $args = "*";
-            $this->sql .= "SELECT $args FROM " . $this->table;
+            $this->sql
+ .= "SELECT $args FROM " . $this->table;
             return $this;
     }
 
